@@ -33,7 +33,6 @@ export default function Home() {
 
       {/* Sections */}
       <HeroSection />
-      <GameSection />
       <ProjectsSection />
       <GallerySection />
       <DiarySection />
