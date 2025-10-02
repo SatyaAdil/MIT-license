@@ -19,7 +19,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
+      <head>
+        {/* UIcons CDN biar icon LinkedIn, Github, IG muncul */}
+        <link
+          rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css"
+        />
+      </head>
+      <body
+        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
+      >
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>

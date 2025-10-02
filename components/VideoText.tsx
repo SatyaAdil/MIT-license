@@ -3,9 +3,9 @@ import React from "react";
 
 const VideoText: React.FC = () => {
   return (
-    <div className="relative flex justify-center items-center w-full h-[400px] md:h-screen overflow-hidden">
+    <div className="relative flex justify-center items-center w-full px-4">
       <h1
-        className="text-[200px] md:text-[15vw] uppercase text-transparent"
+        className="text-[400px] md:text-[17vw] uppercase text-transparent"
         style={{
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
@@ -13,13 +13,13 @@ const VideoText: React.FC = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          fontFamily: "'Impact', 'Arial Black', 'Helvetica Neue', sans-serif",
-          fontWeight: 900,
-          letterSpacing: "-0.02em",
+          fontFamily: "'Helvetica Neue', sans-serif",
+          fontWeight: "1000",
+          letterSpacing: "-0.1em", // Bisa adjust antara -0.08em sampai -0.12em
           textTransform: "uppercase",
         }}
       >
-        Satya'Adil
+        SATYA_
       </h1>
     </div>
   );
