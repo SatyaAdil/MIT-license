@@ -9,7 +9,7 @@ import DiarySection from "@/components/diary-section";
 import SkillsSection from "@/components/skills-section";
 import InvitationSection from "@/components/invitation-section";
 import Navigation from "@/components/navigation";
-import BackgroundStars from "@/components/BackgroundStars";
+
 
 // Komponen berat
 const MusicPlayer = dynamic(() => import("@/components/music-player"), { ssr: false });
@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       {/* Background & Navigation */}
-      <BackgroundStars />
+      
       <Navigation />
       {/* Music */}
       <MusicPlayer />
@@ -58,6 +58,8 @@ export default function Home() {
       <div className="relative z-20">
         {/* Spacer untuk hero section agar tidak overlap */}
         <div className="h-screen" />
+
+        
         
         {/* Sections */}
         <div className="relative">

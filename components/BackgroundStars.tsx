@@ -1,79 +1,124 @@
 "use client";
-import { useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
-const StarBackground = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+const SpaceBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let stars: { x: number; y: number; size: number; dx: number; dy: number }[] = [];
-    let animationFrameId: number;
-
-    const resize = () => {
+    const setCanvasSize = () => {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      stars = Array.from({ length: 500 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 0.2 + 0.1,      // bintang super kecil
-        dx: (Math.random() - 0.5) * 0.02,     // pergerakan horizontal lambat
-        dy: (Math.random() - 0.5) * 0.02,     // pergerakan vertikal lambat
-      }));
     };
+    setCanvasSize();
+    window.addEventListener("resize", setCanvasSize);
 
-    const draw = () => {
-      // 🌌 Background gradient langit → dataran tipis
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, "#000000");      // atas hitam
-      gradient.addColorStop(0.55, "#000000");   // sampai 55% atas tetap hitam
-      gradient.addColorStop(0.7, "#1a1a1a");    // mulai abu tipis (kabut tipis)
-      gradient.addColorStop(0.85, "#2a2a2a");   // dataran bawah mulai terlihat
-      gradient.addColorStop(1, "#333333");      // bawah paling gelap
+    class Star {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      twinkleSpeed: number;
+      twinklePhase: number;
 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      constructor() {
+        this.x = Math.random() * (canvas?.width || window.innerWidth);
+        this.y = Math.random() * (canvas?.height || window.innerHeight);
+        this.size = Math.random() * 2;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.05;
+        this.opacity = Math.random();
+        this.twinkleSpeed = Math.random() * 0.015 + 0.005;
+        this.twinklePhase = Math.random() * Math.PI * 2;
+      }
 
-      // ✨ Gambar bintang kecil
-      stars.forEach((star) => {
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (canvas) {
+          if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+        
+        this.twinklePhase += this.twinkleSpeed;
+        this.opacity = (Math.sin(this.twinklePhase) + 1) / 2;
+      }
+
+      draw() {
+        if (!ctx) return;
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.8})`;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
+      }
+    }
 
-        // update posisi bintang
-        star.x += star.dx;
-        star.y += star.dy;
+    const stars: Star[] = [];
+    const starCount = 200;
+    for (let i = 0; i < starCount; i++) {
+      stars.push(new Star());
+    }
 
-        // loop bintang ketika keluar layar
-        if (star.x < 0) star.x = canvas.width;
-        if (star.x > canvas.width) star.x = 0;
-        if (star.y < 0) star.y = canvas.height;
-        if (star.y > canvas.height) star.y = 0;
+    const animate = () => {
+      if (!ctx || !canvas) return;
+      
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      stars.forEach((star) => {
+        star.update();
+        star.draw();
       });
 
-      animationFrameId = requestAnimationFrame(draw);
+      requestAnimationFrame(animate);
     };
 
-    resize();
-    draw();
-    window.addEventListener("resize", resize);
+    animate();
 
     return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", setCanvasSize);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full z-0"
-    />
+    <div className="absolute inset-0 -z-10 flex flex-col">
+      {/* 65% atas hitam pekat */}
+      <div className="h-[60%] w-full bg-black" />
+
+      {/* Gradasi tipis transisi */}
+      <div
+        className="h-[85px] w-full"
+        style={{
+          background: "linear-gradient(to bottom, #000000, #111111)",
+        }}
+      />
+
+      {/* 35% bawah abu-abu gelap mendekati hitam */}
+      <div className="flex-1 w-full" style={{ backgroundColor: "#111111" }} />
+
+      {/* Canvas untuk partikel bintang */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+
+      {/* Vignette effect */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%)"
+        }}
+      />
+    </div>
   );
 };
 
-export default StarBackground;
+export default SpaceBackground;

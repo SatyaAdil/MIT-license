@@ -55,34 +55,33 @@ export default function Navigation() {
       {/* Kanan Atas - Sosmed */}
       <div className="absolute top-6 right-6 flex items-center gap-5 pointer-events-auto text-white text-lg">
         <a
-  href="https://instagram.com"
-  target="_blank"
-  className="hover:text-cyan-400 transition"
->
-  <i className="fi fi-brands-instagram"></i>
-</a>
-<a
-  href="https://linkedin.com"
-  target="_blank"
-  className="hover:text-cyan-400 transition"
->
-  <i className="fi fi-brands-linkedin"></i>
-</a>
-<a
-  href="https://github.com"
-  target="_blank"
-  className="hover:text-cyan-400 transition"
->
-  <i className="fi fi-brands-github"></i>
-</a>
-<a
-  href="https://discord.com"
-  target="_blank"
-  className="hover:text-cyan-400 transition"
->
-  <i className="fi fi-brands-discord"></i>
-</a>
-
+          href="https://instagram.com"
+          target="_blank"
+          className="hover:text-cyan-400 transition"
+        >
+          <i className="fi fi-brands-instagram"></i>
+        </a>
+        <a
+          href="https://linkedin.com"
+          target="_blank"
+          className="hover:text-cyan-400 transition"
+        >
+          <i className="fi fi-brands-linkedin"></i>
+        </a>
+        <a
+          href="https://github.com"
+          target="_blank"
+          className="hover:text-cyan-400 transition"
+        >
+          <i className="fi fi-brands-github"></i>
+        </a>
+        <a
+          href="https://discord.com"
+          target="_blank"
+          className="hover:text-cyan-400 transition"
+        >
+          <i className="fi fi-brands-discord"></i>
+        </a>
       </div>
     </nav>
   );
