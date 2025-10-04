@@ -19,7 +19,7 @@ export default function Navigation() {
         <Image
           src="/logo.png"
           alt="Logo"
-          width={160}   // sebelumnya 120 → diperbesar
+          width={190}   // sebelumnya 120 → diperbesar
           height={55}   // sebelumnya 40 → diperbesar
           className="object-contain drop-shadow-[0_0_6px_rgba(0,200,255,0.6)]"
         />

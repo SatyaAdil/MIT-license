@@ -91,18 +91,18 @@ const SpaceBackground: React.FC = () => {
   return (
     <div className="absolute inset-0 -z-10 flex flex-col">
       {/* 65% atas hitam pekat */}
-      <div className="h-[60%] w-full bg-black" />
+      <div className="h-[55.2%] w-full bg-black" />
 
       {/* Gradasi tipis transisi */}
       <div
-        className="h-[85px] w-full"
+        className="h-[75px] w-full"
         style={{
-          background: "linear-gradient(to bottom, #000000, #111111)",
+          background: "linear-gradient(to bottom, #000000, #1a1a1a)",
         }}
       />
 
       {/* 35% bawah abu-abu gelap mendekati hitam */}
-      <div className="flex-1 w-full" style={{ backgroundColor: "#111111" }} />
+      <div className="flex-1 w-full" style={{ backgroundColor: "#1a1a1a" }} />
 
       {/* Canvas untuk partikel bintang */}
       <canvas

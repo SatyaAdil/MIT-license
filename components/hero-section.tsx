@@ -38,7 +38,7 @@ function AstronautModel(props: any) {
 
   useFrame((state, delta) => {
     if (astronautRef.current) {
-      const speed = 2
+      const speed = 0.1
       let moveX = 0
       let moveZ = 0
 
@@ -88,14 +88,14 @@ function AstronautModel(props: any) {
 
   return (
     <>
-      {/* Main spotlight following astronaut */}
+      {/* Main spotlight following astronaut - very soft */}
       <spotLight
         ref={spotLightRef}
-        position={[0, 6, 0]}
-        angle={0.35}
+        position={[0, 0.1, 0]}
+        angle={0.6}
         penumbra={1}
-        intensity={50}
-        distance={12}
+        intensity={10000}
+        distance={3}
         decay={2}
         castShadow
         shadow-mapSize-width={2048}
@@ -103,21 +103,21 @@ function AstronautModel(props: any) {
         shadow-bias={-0.0001}
       />
 
-      {/* Ground plane with subtle glow */}
+      {/* Ground circle - very thin and subtle like jesky */}
       <mesh 
         ref={groundRef}
         rotation={[-Math.PI / 2, 0, 0]} 
         position={[0, -1.799, 0]} 
         receiveShadow
       >
-        <circleGeometry args={[2.2, 64]} />
+        <circleGeometry args={[1.2, 64]} />
         <meshStandardMaterial
-          color="#ffffff"
+          color="#66666"
           emissive="#ffffff"
-          emissiveIntensity={0.15}
+          emissiveIntensity={0.100}
           transparent
-          opacity={0.25}
-          roughness={1}
+          opacity={0.01}
+          roughness={2}
         />
       </mesh>
 
@@ -142,28 +142,28 @@ const HeroSection: React.FC = () => {
       {/* Canvas Astronot 3D */}
       <div className="absolute inset-0 z-10">
         <Canvas shadows camera={{ position: [0, 2, 8], fov: 50 }}>
-          {/* Very low ambient light for dark space atmosphere */}
+          {/* Minimal ambient */}
           <ambientLight intensity={0.08} />
           
-          {/* Subtle fill light from front */}
+          {/* Gentle front light */}
           <directionalLight
-            position={[0, 2, 4]}
-            intensity={0.3}
+            position={[0, 2, 3]}
+            intensity={0.6}
             color="#ffffff"
           />
 
           {/* Astronaut with dynamic spotlight */}
-          <AstronautModel scale={0.4} position={[0, -1.8, 0]} />
+          <AstronautModel scale={0.3} position={[0, -2, 0]} />
 
-          {/* Very subtle rim lights */}
-          <pointLight position={[4, 2, 3]} intensity={0.5} color="#4a9eff" distance={10} />
-          <pointLight position={[-4, 2, 3]} intensity={0.5} color="#ff6b9d" distance={10} />
+          {/* Minimal rim lights */}
+          <pointLight position={[2, 0.5, 1]} intensity={0.4} color="#aaaaaa" distance={6} />
+          <pointLight position={[-2, 0.5, 1]} intensity={0.4} color="#aaaaaa" distance={6} />
         </Canvas>
       </div>
 
       {/* Subtle center glow */}
       <div className="absolute inset-0 z-[5] pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-radial from-white/10 via-white/5 to-transparent rounded-full blur-[60px]"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-gradient-radial from-white/8 via-white/3 to-transparent rounded-full blur-[60px]"></div>
       </div>
 
       {/* Background Stars */}
