@@ -9,7 +9,7 @@ import DiarySection from "@/components/diary-section";
 import SkillsSection from "@/components/skills-section";
 import InvitationSection from "@/components/invitation-section";
 import Navigation from "@/components/navigation";
-
+import ProfileSection from "@/components/ProfileSection";
 
 // Komponen berat
 const MusicPlayer = dynamic(() => import("@/components/music-player"), { ssr: false });
@@ -64,6 +64,7 @@ export default function Home() {
         {/* Sections */}
         <div className="relative">
           <ProjectsSection />
+          <ProfileSection />
           <GallerySection />
           <DiarySection />
           <SkillsSection />

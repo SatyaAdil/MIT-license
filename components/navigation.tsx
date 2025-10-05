@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
+
 export default function Navigation() {
   const [active, setActive] = useState<string | null>(null);
 
