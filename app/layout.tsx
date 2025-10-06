@@ -7,9 +7,12 @@ import "./globals.css"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
-  title: "Your Name - Portfolio",
-  description: "Software Engineer & Creative Developer Portfolio",
-  generator: "StyDcode",
+  title: "StyDcode",
+  icons: {
+    icon: [
+      { url: "/StyDcode.ico", sizes: "512x512", },
+    ],
+  },
 }
 
 export default function RootLayout({

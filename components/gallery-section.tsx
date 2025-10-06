@@ -1,56 +1,42 @@
 "use client"
 
-import { useState } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import ParallaxImages from "../components/ParallaxImages"
 
 export default function GallerySection() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
-
-  const photos = [
-    { src: "/portrait-photo-developer.jpg", alt: "Portrait" },
-    { src: "/coding-workspace-setup.jpg", alt: "Workspace" },
-    { src: "/tech-conference-speaking.jpg", alt: "Conference" },
-    { src: "/team-collaboration.png", alt: "Team" },
-    { src: "/hackathon-coding-event.jpg", alt: "Hackathon" },
-    { src: "/outdoor-nature-hiking.jpg", alt: "Outdoor" },
-  ]
+  const { scrollY } = useScroll()
+  const yText = useTransform(scrollY, [0, 400], ["0%", "-20%"])
 
   return (
-    <section id="gallery" className="relative py-20 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-4xl md:text-6xl font-bold text-center mb-4 text-balance">Life Gallery</h2>
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Moments captured from my journey as a developer and beyond
-        </p>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {photos.map((photo, index) => (
-            <div
-              key={index}
-              className="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
-              onClick={() => setSelectedImage(photo.src)}
-            >
-              <img
-                src={photo.src || "/placeholder.svg"}
-                alt={photo.alt}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          ))}
-        </div>
+    <section className="relative w-full min-h-screen bg-transparent text-white overflow-hidden">
+      {/* Efek gambar parallax */}
+      <ParallaxImages />
 
-        {selectedImage && (
-          <div
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            <img
-              src={selectedImage || "/placeholder.svg"}
-              alt="Selected"
-              className="max-w-full max-h-full rounded-lg"
-            />
-          </div>
-        )}
-      </div>
+      {/* Gambar logo / teks overlay */}
+      <motion.div
+        style={{ y: yText }}
+        className="absolute inset-0 flex flex-col justify-center items-center text-center px-6"
+      >
+        {/* ✅ Ganti h2 jadi gambar */}
+        <motion.img
+          src="/coder.png"   // ⬅️ taruh file ini di /public/
+          alt="StyDcode"
+          initial={{ opacity: 1, scale: 1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="w-[300px] md:w-[500px] mb-6 drop-shadow-[0_5px_15px_rgba(255,255,255,0.3)]"
+        />
+
+        {/* (opsional) teks kecil di bawah logo */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-lg md:text-2xl text-gray-300 max-w-2xl"
+        >
+          {/* tambahkan deskripsi di sini kalau mau */}
+        </motion.p>
+      </motion.div>
     </section>
   )
 }

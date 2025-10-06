@@ -26,46 +26,46 @@ export default function ProfileSection() {
       </div>
 
       {/* KONTEN */}
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-16 max-w-6xl">
-        {/* FOTO KIRI */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
-        >
-          <img
-            src="pp.jpg"
-            alt="Satya Adil"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-16 max-w-6xl mx-auto text-center md:text-left">
+          {/* FOTO KIRI */}
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+          >
+            <img
+              src="pp.jpg"
+              alt="Satya Adil"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
 
-        {/* TEKS KANAN */}
-        <motion.div
-          initial={{ opacity: 0, x: 80 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-          className="max-w-[600px]"
-        >
-          <h3 className="text-lg font-light mb-2">Hi there! 👋</h3>
-          <p className="text-neutral-300 mb-4">
-            My name is <span className="font-semibold text-white">Satya Adil</span>, and I'm a{" "}
-            <span className="text-pink-400 font-semibold">Software Engineer</span>.
-          </p>
+          {/* TEKS KANAN */}
+          <motion.div
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            className="max-w-[600px]"
+          >
+            <h3 className="text-lg font-light mb-2">Hi there! 👋</h3>
+            <p className="text-neutral-300 mb-4">
+              My name is <span className="font-semibold text-white">Satya Adil</span>, and I'm a{" "}
+              <span className="text-pink-400 font-semibold">Software Engineer</span>.
+            </p>
 
-          <p className="text-lg text-neutral-200 leading-relaxed mb-6">
-            I blend artwork with cutting-edge technology, designing immersive visual and functional
-            user interfaces and experiences. Focused on crafting aesthetic and performant web
-            applications using <span className="text-pink-400">React</span> and{" "}
-            <span className="text-pink-400">Next.js</span>.
-          </p>
+            <p className="text-lg text-neutral-200 leading-relaxed mb-6">
+              I blend artwork with cutting-edge technology, designing immersive visual and functional
+              user interfaces and experiences. Focused on crafting aesthetic and performant web
+              applications using <span className="text-pink-400">React</span> and{" "}
+              <span className="text-pink-400">Next.js</span>.
+            </p>
 
-          <button className="px-6 py-3 border-2 border-white/30 text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all">
-            Contact Me
-          </button>
-        </motion.div>
-      </div>
+            <button className="px-6 py-3 border-2 border-white/30 text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all">
+              Contact Me
+            </button>
+          </motion.div>
+        </div>
     </section>
   )
 }
