@@ -59,14 +59,14 @@ export default function Home() {
         <div className="relative">
           <ProjectsSection />
 
-          {/* 🔥 Parallax aktif di sini */}
           <div className="relative z-10">
             <ProfileSection />
           </div>
 
           <GallerySection />
-          <DiarySection />
           <SkillsSection />
+          <DiarySection />
+
           <InvitationSection />
         </div>
       </div>
