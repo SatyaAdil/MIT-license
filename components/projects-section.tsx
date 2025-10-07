@@ -12,7 +12,7 @@ export default function ProjectsSection() {
       detail:
         "Assisted and contributed to the 1-to-1 migration of a legacy application to a modern React-based solution, while enhancing feature functionality and improving UI/UX.",
       image:
-        "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80",
+        "peache photo.png",
     },
     {
       title: "ARCADIA LABS",
