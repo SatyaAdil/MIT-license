@@ -11,7 +11,8 @@ import DiarySection from "@/components/diary-section";
 import SkillsSection from "@/components/skills-section";
 import InvitationSection from "@/components/invitation-section";
 import Navigation from "@/components/navigation";
-import ProfileSection from "@/components/ProfileSection"; // sudah ada ParallaxImages di dalamnya
+import ProfileSection from "@/components/ProfileSection";
+import LearningJourneyConcepts from "@/components/Learning"; // sudah ada ParallaxImages di dalamnya
 
 // Komponen berat
 const MusicPlayer = dynamic(() => import("@/components/music-player"), { ssr: false });
@@ -66,7 +67,7 @@ export default function Home() {
           <GallerySection />
           <SkillsSection />
           <DiarySection />
-
+          <LearningJourneyConcepts />
           <InvitationSection />
         </div>
       </div>

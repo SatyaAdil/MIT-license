@@ -3,66 +3,75 @@
 import { motion } from "framer-motion"
 
 export default function ProjectsSection() {
-  const projects = [
-    {
-      title: "AEROTALON",
-      location: "2025 | MELBOURNE, AUSTRALIA",
-      category: "FRONTEND DEV",
-      description: "A Streamlined Aviation Operations And Management Platform",
-      detail:
-        "Assisted and contributed to the 1-to-1 migration of a legacy application to a modern React-based solution, while enhancing feature functionality and improving UI/UX.",
-      image:
-        "peache photo.png",
-    },
-    {
-      title: "ARCADIA LABS",
-      location: "2023 | JAKARTA, INDONESIA",
-      category: "BACKEND DEV",
-      description: "Secure API Platform For Fintech Applications",
-      detail:
-        "Developed and maintained robust RESTful APIs for fintech integrations, focusing on authentication, scalability, and data encryption using Node.js and PostgreSQL.",
-      image:
-        "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80",
-    },
-    {
-      title: "NOVUS AI",
-      location: "2024 | SYDNEY, AUSTRALIA",
-      category: "MACHINE LEARNING",
-      description: "AI-Powered Document Classification Engine",
-      detail:
-        "Implemented advanced NLP pipelines for real-time document analysis using TensorFlow and OpenAI APIs, achieving over 93% accuracy in classification.",
-      image:
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80",
-    },
-    {
-      title: "LUMINA STUDIO",
-      location: "2023 | SINGAPORE",
-      category: "UI/UX DESIGN",
-      description: "Creative Agency Digital Experience",
-      detail:
-        "Collaborated in creating a high-end visual storytelling website with immersive animations using GSAP and Framer Motion for dynamic user engagement.",
-      image:
-        "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80",
-    },
-    {
-      title: "OMEGA SYSTEMS",
-      location: "2022 | BANDUNG, INDONESIA",
-      category: "FULLSTACK DEV",
-      description: "Smart IoT Management Dashboard",
-      detail:
-        "Built a scalable IoT data dashboard integrating MQTT, React, and Laravel APIs to visualize and control connected devices in real-time.",
-      image:
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80",
-    },
-  ]
+const projects = [
+  {
+    title: "PC STUDIO",
+    location: "2025 | TEGAL, INDONESIA",
+    category: "FRONTEND DEV",
+    description: "A professional photography booking website with automated scheduling system",
+    detail:
+      "As a member of the team representing PC Studio, I was fully responsible for developing the frontend app, completing all the work myself except for the mock-up design. Built with React and Firebase to deliver an intuitive, fast, and elegant photography service booking experience.",
+    mockup: "peache photo.png",
+    background: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=3000&q=95",
+  },
+  {
+    title: "JURUMUDI PRO",
+    location: "2023 | SLAWI, INDONESIA",
+    category: "BACKEND DEV",
+    description: "A decision support system for ship helmsman selection",
+    detail:
+      "As the sole developer of this project, I implemented the SAW (Simple Additive Weighting) method using Laravel to help determine the most suitable ship helmsman based on specified criteria. Features include an admin dashboard for managing criteria data and selection results.",
+    mockup: "kapal.png",
+    background: "https://images.unsplash.com/photo-1501630834273-4b5604d2ee31?w=3000&q=95",
+  },
+  {
+    title: "ANTI DROWSY",
+    location: "2024 | TEGAL, INDONESIA",
+    category: "MACHINE LEARNING",
+    description: "An AI-powered drowsiness and phone usage detection for drivers",
+    detail:
+      "Working independently, I developed this system using Flask, YOLO, and MediaPipe to detect closed eyes, yawning, and phone usage in real-time. The system provides audio and visual alerts to enhance driver safety on the road.",
+    mockup: "Anti Drowsy.png",
+    background: "https://images.unsplash.com/photo-1542282088-fe8426682b8f?w=3000&q=95",
+  },
+  {
+    title: "AJ SEMPRONG",
+    location: "2023 | ADIWERNA, INDONESIA",
+    category: "CULINARY PLATFORM",
+    description: "A digital platform for promoting traditional Indonesian culinary",
+    detail:
+      "As a member of the development team, I was responsible for building this platform using Laravel and Tailwind to help culinary SMEs expand their market reach. Features include product catalogs, online ordering systems, and appetizing visual displays.",
+    mockup: "semprong.png",
+    background: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=3000&q=95",
+  },
+  {
+    title: "OMEGA SYSTEMS",
+    location: "2022 | BANDUNG, INDONESIA",
+    category: "FULLSTACK DEV",
+    description: "A smart dashboard for IoT device management",
+    detail:
+      "Working as a fullstack developer, I combined Laravel, React, and MQTT to display IoT device data in real-time. The interactive dashboard allows users to monitor, control, and analyze device performance from a single location.",
+    mockup: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+    background: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=3000&q=95",
+  },
+]
+
 
   return (
+    <>
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        
+        .project-text {
+          font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+      `}</style>
     <section className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
       <div className="relative px-30 mb-20 pt-12">
         <p className="text-neutral-400 text-sm tracking-[0.3em] uppercase mb-2">
           FEATURED WORKS
         </p>
-        <h1 className="text-[10rem] font-black tracking-tight leading-none text-white mb-16">
+        <h1 className="text-[8rem] font-black tracking-tight leading-none text-white mb-16">
           PROJECTS
         </h1>
         <div className="text-center mt-12">
@@ -75,6 +84,7 @@ export default function ProjectsSection() {
         </div>
       </div>
 
+      {/* Container dengan max-width dan padding untuk layout yang rapi */}
       <div className="relative max-w-[1600px] mx-auto px-12 mt-16">
         {projects.map((project, index) => (
           <motion.div
@@ -85,37 +95,61 @@ export default function ProjectsSection() {
             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
             className="relative mb-40"
           >
-            <div className="relative w-[90%] mx-auto h-[720px] overflow-hidden shadow-[0_20px_100px_rgba(0,0,0,0.7)]">
+            {/* Container gambar dengan overflow hidden biar mockup ga keluar */}
+            <div className="relative w-[87%] mx-auto h-[700px] overflow-hidden shadow-[0_20px_100px_rgba(0,0,0,0.7)]">
+              {/* Background image */}
               <img
-                src={project.image}
+                src={project.background}
                 alt={project.title}
                 className="w-full h-full object-cover"
+                style={{ 
+                  imageRendering: '-webkit-optimize-contrast',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  willChange: 'transform'
+                }}
+                loading="eager"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20"></div>
 
-              <div className="absolute inset-0 flex items-center">
-                <div className="pl-16 max-w-[580px]">
-                  <div className="mb-8">
-                    <h2 className="text-[3.5rem] font-black leading-[0.95] tracking-tight mb-3 text-white">
+              {/* Mockup di tengah-kanan, ukuran besar */}
+              <div className="absolute top-1/2 -translate-y-1/2 right-8 w-[780px] h-auto z-20">
+                <img
+                  src={project.mockup}
+                  alt={`${project.title} mockup`}
+                  className="w-full h-auto object-contain"
+                  style={{ 
+                    filter: 'drop-shadow(-15px 25px 50px rgba(0,0,0,0.75))',
+                    imageRendering: '-webkit-optimize-contrast',
+                  }}
+                  loading="eager"
+                />
+              </div>
+
+              <div className="absolute inset-0 flex items-start pt-14">
+                <div className="pl-16 max-w-[500px] z-30 project-text">
+                  <div className="mb-12">
+                    <h2 className="text-[1.7rem] font-black leading-[0.9] tracking-tight mb-3 text-white">
                       {project.title}
-                      <span className="text-pink-500 ml-2">↗</span>
+                      <span className="text-white ml-2">↗</span>
                     </h2>
-                    <p className="text-[0.6rem] text-neutral-300 tracking-[0.35em] font-semibold uppercase">
+                    <p className="text-[0.75rem] text-neutral-400 tracking-[0.25 em] font-semibold uppercase mb-46">
                       {project.location}
                     </p>
                   </div>
 
-                  <div className="border-l-[3px] border-pink-500 pl-7">
-                    <p className="text-[0.6rem] text-neutral-300 tracking-[0.3em] font-bold uppercase mb-5">
+                  <div className="">
+                    <p className="text-[0.75rem] text-neutral-400 tracking-[0.2em] font-semibold uppercase mb-1">
                       {project.category}
                     </p>
-                    <h3 className="text-[1.65rem] font-bold leading-[1.25] tracking-tight text-white mb-5">
+                    <h3 className="text-[1.7rem] font-extrabold leading-[1.15] tracking-tight text-white mb-8">
                       {project.description}
                     </h3>
-                    <p className="text-[0.9rem] text-neutral-300 leading-relaxed mb-8">
+                    <p className="text-[0.95rem] text-neutral-300 leading-[1.7] mb-10">
                       {project.detail}
                     </p>
-                    <button className="px-5 py-2.5 border-2 border-white/40 text-white text-[0.65rem] font-bold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors">
+                    <button className="px-6 py-3 border-2 border-white/50 text-white text-[0.75rem] font-bold tracking-[0.12em] uppercase hover:bg-white/10 transition-colors">
                       UNDER NDA - NO CASE STUDY
                     </button>
                   </div>
@@ -126,5 +160,6 @@ export default function ProjectsSection() {
         ))}
       </div>
     </section>
+    </>
   )
 }

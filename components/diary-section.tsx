@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect, useRef } from "react"
 import { Globe, ChevronDown } from "lucide-react"
 
@@ -25,46 +26,51 @@ type StoryContent = {
   stats: readonly Stat[]
 }
 
+const colorClasses = [
+  "text-cyan-400",
+  "text-sky-400",
+  "text-teal-400",
+  "text-blue-400",
+  "text-indigo-400",
+  "text-violet-400",
+  "text-pink-400",
+]
+
 const content = {
   en: {
-    title: "ショートバイオグラフィー",
+    title: "Journey Diary",
     subtitle: "STORY OF MY LIFE",
     paragraphs: [
       {
         text: "Hello, my name is",
         highlight1: "Satya Adil Faishal",
-        text2:
-          ", a Frontend Developer from Tegal, Indonesia. I firmly believe that the best code is written with a purpose, not just as a shortcut.",
+        text2: ", a Frontend Developer from Tegal, Indonesia. I firmly believe that the best code is written with a purpose — not just as a shortcut.",
       },
       {
-        text: "My interest in technology started when I was a child. I loved playing video games and often wondered, \"How is the digital world actually built?\" That curiosity kept growing, especially during my time in pesantren, where memorizing and studying the Quran taught me discipline, focus, and a love for learning; habits that proved incredibly helpful when I started diving into coding.",
+        text: "My interest in technology started when I was a child. I loved playing video games and often wondered, \"How can a digital world like that exist?\" That curiosity grew even stronger when I studied at a pesantren. Memorizing and studying the Quran taught me discipline, focus, and a love for learning — habits that turned out to be very helpful when I started learning to code.",
       },
       {
-        text: "At the age of 16, I realized that coding was my true passion. However, my financial situation at the time didn't allow me to go straight to college after graduating from",
+        text: "At the age of 16, I realized that coding was my passion. However, financial conditions at that time did not allow me to go straight to college after graduating from",
         school: "SMKN 3 Tegal",
-        text2:
-          ". Instead of waiting, I decided to move to Jakarta, work for a year, and save every penny to fund my own education. During that time, I also learned self-taught through",
+        text2: ". So I decided to go to Jakarta to work while learning to code self-taught through",
         highlight1: "online bootcamps, Dicoding, YouTube",
-        text3:
-          ", and many other resources to keep improving my skills before officially starting college. That determination paid off—I returned to Tegal and enrolled in Informatics Engineering at",
+        text3: " and various other resources. After more than a year of working and studying in Jakarta, I returned to Tegal and continued my studies at",
         university: "Universitas Harkat Negeri Tegal",
-        text3extra: ". From this experience, I learned that obstacles are not dead ends—they are just detours.",
+        text3extra: ", majoring in Informatics Engineering. From this experience, I learned that obstacles are not the end of the road — they are just a detour.",
       },
       {
-        text: "Today, I enjoy applying my skills to make a real impact—helping",
+        text: "Now, I'm glad to be able to use my abilities to make something meaningful — helping",
         highlight1: "business owners, institutions, and individuals",
-        text2:
-          " build digital solutions. From management systems to online presence, my work helps them streamline operations and expand their reach. It's more than just writing code; it's building bridges between traditional businesses and modern technology, making tech truly beneficial for people.",
+        text2: " build digital solutions. From management systems to online presence, my work helps them streamline operations and expand their reach. It's not just about writing code — it's about building bridges between traditional businesses and modern technology, making technology something truly useful for people.",
       },
       {
-        text: "Looking ahead, I am driven by a desire to keep learning, growing, and making a difference for those around me. Every project, every mistake, and every challenge is an opportunity to improve. My goal is not only personal success but also creating a better future for my",
-        highlight2: "family",
-        text2:
-          " and everyone I help, using technology as a force for good.",
+        text: "Looking ahead, I want to keep learning, growing, and contributing to those around me. Every project, mistake, and challenge is an opportunity to become better. My goal is not only personal success, but also to create a better future for my family and",
+        highlight1: "everyone I help",
+        text2: " — using technology as a force for good.",
       },
     ],
     quote:
-      "Every line of code I write is a step toward a better future—for my family, business owners, institutions, individuals, and myself. Obstacles are not the end; they are simply a detour toward a better path.",
+      "Every line of code I write is a step toward a better future — for my family, businesses, and community. Obstacles are not endings; they are redirections to a better path.",
     stats: [
       { value: "2019", label: "Started Coding" },
       { value: "1+", label: "Years in Jakarta" },
@@ -73,44 +79,39 @@ const content = {
     ],
   },
   id: {
-    title: "ショートバイオグラフィー",
+    title: "Journey Diary",
     subtitle: "CERITA HIDUP SAYA",
     paragraphs: [
       {
         text: "Hallo, nama saya",
         highlight1: "Satya Adil Faishal",
-        text2:
-          ", seorang Frontend Developer dari Tegal, Indonesia. Saya selalu percaya kalau kode terbaik itu ditulis dengan tujuan, bukan sekadar jalan pintas.",
+        text2: ", seorang Frontend Developer dari Tegal, Indonesia. Saya selalu percaya bahwa kode terbaik ditulis dengan tujuan — bukan sekadar jalan pintas.",
       },
       {
-        text: "Ketertarikan saya dengan dunia teknologi dimulai sejak kecil. Waktu masih anak-anak, saya suka main video game—dan sering bertanya-tanya, \"Gimana ya cara bikin dunia digital itu bisa ada?\" Rasa penasaran itu terus tumbuh, apalagi ketika belajar di pesantren. Menghafal dan mempelajari Al-Quran mengajarkan saya disiplin, fokus, dan cinta belajar; kebiasaan ini ternyata sangat membantu saat saya mulai menekuni dunia coding.",
+        text: "Ketertarikan saya pada dunia teknologi dimulai sejak kecil. Waktu masih anak-anak, saya suka main video game dan sering bertanya-tanya, \"Gimana ya cara bikin dunia digital itu bisa ada?\" Rasa penasaran itu terus tumbuh, apalagi ketika saya belajar di pesantren. Menghafal dan mempelajari Al-Quran mengajarkan saya disiplin, fokus, dan cinta belajar — kebiasaan yang ternyata sangat membantu ketika mulai menekuni dunia coding.",
       },
       {
-        text: "Waktu umur 16 tahun, saya sadar kalau coding adalah passion saya. Tapi kondisi finansial waktu itu nggak memungkinkan saya untuk langsung kuliah setelah lulus dari",
+        text: "Saat berusia 16 tahun, saya sadar bahwa coding adalah passion saya. Namun, kondisi finansial waktu itu belum memungkinkan saya untuk langsung kuliah setelah lulus dari",
         school: "SMKN 3 Tegal",
-        text2:
-          ". Daripada menunggu, saya memutuskan pindah ke Jakarta, kerja setahun, dan menabung tiap rupiah demi membiayai pendidikan sendiri. Selama itu, saya juga belajar otodidak lewat",
+        text2: ". Maka saya memutuskan untuk merantau ke Jakarta untuk bekerja sambil belajar coding secara otodidak lewat",
         highlight1: "bootcamp online, Dicoding, YouTube",
-        text3:
-          ", dan berbagai sumber lainnya, supaya skill saya terus berkembang sebelum resmi masuk kuliah. Tekad itu membuahkan hasil—saya kembali ke Tegal dan masuk Teknik Informatika di",
+        text3: " serta berbagai sumber lainnya. Setelah lebih dari setahun bekerja dan belajar di Jakarta, saya kembali ke Tegal dan melanjutkan studi di",
         university: "Universitas Harkat Negeri Tegal",
-        text3extra: ". Dari pengalaman ini, saya belajar kalau hambatan itu bukan akhir jalan, tapi cuma jalan memutar.",
+        text3extra: ", jurusan Teknik Informatika. Dari pengalaman ini, saya belajar bahwa hambatan bukan akhir jalan, melainkan hanya jalan memutar.",
       },
       {
-        text: "Sekarang, saya senang bisa menggunakan skill saya untuk hal yang nyata—membantu",
+        text: "Sekarang, saya senang bisa menggunakan kemampuan saya untuk hal yang nyata — membantu",
         highlight1: "pelaku usaha, instansi, dan individu",
-        text2:
-          " membangun solusi digital. Dari sistem manajemen hingga kehadiran online, karya saya membantu mereka mempermudah operasional dan memperluas jangkauan. Rasanya tidak hanya menulis kode, tapi juga membangun jembatan antara bisnis tradisional dan teknologi modern, menjadikan teknologi sesuatu yang bermanfaat bagi banyak orang.",
+        text2: " membangun solusi digital. Dari sistem manajemen hingga kehadiran online, karya saya membantu mereka mempermudah operasional dan memperluas jangkauan. Rasanya bukan hanya menulis kode, tapi juga membangun jembatan antara bisnis tradisional dan teknologi modern — menjadikan teknologi sesuatu yang bermanfaat bagi banyak orang.",
       },
       {
-        text: "Ke depan, saya ingin terus belajar, berkembang, dan memberi manfaat bagi orang-orang di sekitar. Setiap proyek, setiap kesalahan, dan setiap tantangan saya anggap sebagai kesempatan untuk menjadi lebih baik. Tujuan saya bukan sekadar kesuksesan pribadi, tetapi juga menciptakan masa depan yang lebih baik bagi",
-        highlight2: "keluarga",
-        text2:
-          " dan semua pihak yang saya bantu, serta memanfaatkan teknologi sebagai kekuatan untuk kebaikan.",
+        text: "Ke depan, saya ingin terus belajar, berkembang, dan memberi manfaat bagi orang-orang di sekitar. Setiap proyek, setiap kesalahan, dan setiap tantangan saya anggap sebagai kesempatan untuk menjadi lebih baik. Tujuan saya bukan sekadar kesuksesan pribadi, tetapi juga menciptakan masa depan yang lebih baik untuk keluarga dan",
+        highlight1: "semua pihak yang saya bantu",
+        text2: " — dengan memanfaatkan teknologi sebagai kekuatan untuk kebaikan.",
       },
     ],
     quote:
-      "Setiap baris kode yang saya tulis adalah langkah menuju masa depan yang lebih baik—untuk keluarga saya, pelaku usaha, instansi, individu, dan diri saya sendiri. Hambatan itu bukan akhir, tapi cuma pengalihan menuju jalan yang lebih baik.",
+      "Setiap baris kode yang saya tulis adalah langkah menuju masa depan yang lebih baik — untuk keluarga saya, pelaku usaha, instansi, individu, dan diri saya sendiri. Hambatan itu bukan akhir, tapi hanya pengalihan menuju jalan yang lebih baik.",
     stats: [
       { value: "2019", label: "Mulai Coding" },
       { value: "1+", label: "Tahun di Jakarta" },
@@ -123,7 +124,7 @@ const content = {
 type Language = keyof typeof content
 
 export default function StorySection() {
-  const [language, setLanguage] = useState<Language>("en")
+  const [language, setLanguage] = useState<Language>("id")
   const [isExpanded, setIsExpanded] = useState(false)
   const [visibleParagraphs, setVisibleParagraphs] = useState<number[]>([])
   const paragraphRefs = useRef<(HTMLParagraphElement | null)[]>([])
@@ -134,7 +135,7 @@ export default function StorySection() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute('data-index'))
+            const index = Number(entry.target.getAttribute("data-index"))
             setVisibleParagraphs((prev) => [...new Set([...prev, index])])
           }
         })
@@ -150,9 +151,9 @@ export default function StorySection() {
   }, [])
 
   return (
-    <section id="story" className="relative py-0 text-white overflow-hidden">
-      <div className="container mx-auto max-w-4xl px-4">
-        {/* Language Toggle - Top Right */}
+    <section id="story" className="relative py-20 text-white overflow-hidden">
+      <div className="container mx-auto max-w-3xl px-4">
+        {/* Language Toggle */}
         <div className="flex justify-end mb-12">
           <div className="inline-flex items-center gap-2 bg-gray-900/50 backdrop-blur-sm rounded-full p-1 border border-gray-800/50">
             <button
@@ -180,9 +181,9 @@ export default function StorySection() {
           </div>
         </div>
 
-        {/* Header - Centered */}
+        {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-light mb-2 text-cyan-400 tracking-wider">
+          <h2 className="text-2xl md:text-4xl font-light mb-2 text-cyan-400 tracking-wider">
             {currentContent.title}
           </h2>
           <h3 className="text-sm md:text-base font-semibold tracking-widest text-gray-400 uppercase">
@@ -190,97 +191,71 @@ export default function StorySection() {
           </h3>
         </div>
 
-        {/* Biography Content */}
-        <div className={`space-y-4 text-gray-300 leading-normal transition-all duration-500 ${isExpanded ? 'max-h-full' : 'max-h-80 overflow-hidden relative'}`}>
-          {currentContent.paragraphs.map((p, i) => (
-            <p
-              key={i}
-              ref={(el) => { paragraphRefs.current[i] = el }}
-              data-index={i}
-              className={`text-sm md:text-base transition-all duration-1000 transform ${
-                visibleParagraphs.includes(i)
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              {p.text}{" "}
-              {p.highlight1 && (
-                <>
-                  <span className="text-cyan-400 font-medium">
-                    {p.highlight1}
-                  </span>{" "}
-                </>
-              )}
-              {p.text2}{" "}
-              {p.school && (
-                <>
-                  <span className="text-cyan-400 font-medium underline decoration-cyan-400/30">
-                    {p.school}
-                  </span>{" "}
-                </>
-              )}
-              {p.text3}{" "}
-              {p.university && (
-                <>
-                  <span className="text-cyan-400 font-medium underline decoration-cyan-400/30">
-                    {p.university}
-                  </span>
-                </>
-              )}
-              {p.text3extra && <>{p.text3extra}</>}
-              {p.highlight2 && (
-                <>
-                  <span className="text-cyan-400 font-medium">
-                    {p.highlight2}
-                  </span>{" "}
-                </>
-              )}
-            </p>
-          ))}
-          
-          {/* Gradient Overlay when collapsed */}
+        {/* Content */}
+        <div
+          className={`space-y-4 text-gray-300 leading-relaxed transition-all duration-500 ${
+            isExpanded ? "max-h-full" : "max-h-80 overflow-hidden relative"
+          }`}
+        >
+          {currentContent.paragraphs.map((p, i) => {
+            const color = colorClasses[i % colorClasses.length]
+            return (
+              <p
+                key={i}
+                ref={(el) => {
+                  paragraphRefs.current[i] = el
+                }}
+                data-index={i}
+                className={`text-sm md:text-base transition-all duration-1000 transform ${
+                  visibleParagraphs.includes(i)
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{
+                  transitionDelay: `${i * 100}ms`,
+                  textAlign: "justify",
+                  textIndent: "2em",
+                }}
+              >
+                {p.text}
+                {p.highlight1 && !p.school && <> <span className={`${color} font-medium`}>{p.highlight1}</span></>}
+                {p.school && <> <span className={`${color} font-medium`}>{p.school}</span></>}
+                {p.text2 && <>{p.text2}</>}
+                {p.highlight1 && p.school && <> <span className={`${color} font-medium`}>{p.highlight1}</span></>}
+                {p.text3 && <>{p.text3}</>}
+                {p.university && <> <span className={`${color} font-medium`}>{p.university}</span></>}
+                {p.text3extra && <>{p.text3extra}</>}
+                {p.highlight2 && <> <span className={`${color} font-medium`}>{p.highlight2}</span></>}
+              </p>
+            )
+          })}
+
           {!isExpanded && (
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none"></div>
           )}
         </div>
 
-        {/* Hide/Show Article Button */}
         <div className="flex justify-center mt-6">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="px-8 py-3 border-2 border-white text-white font-semibold tracking-wider hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 group"
+            className="px-4 py-2 border-2 border-white text-white font-semibold tracking-wider hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 group"
           >
-            {isExpanded ? 'HIDE ARTICLE' : 'SHOW MORE'}
-            <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+            {isExpanded ? "HIDE ARTICLE" : "CONTINUE"}
+            <ChevronDown
+              className={`w-4 h-4 transition-transform duration-300 ${
+                isExpanded ? "rotate-180" : ""
+              }`}
+            />
           </button>
         </div>
 
-        {/* Quote Section - Only visible when expanded */}
         {isExpanded && (
-          <div className="mt-16 space-y-12 animate-fadeIn">
-            <div className="border-l-2 border-gray-700 pl-6 py-4">
-              <p className="text-lg md:text-xl text-gray-300 italic leading-relaxed mb-4">
+          <div className="mt-8 flex justify-end">
+            <div className="max-w-xs text-right">
+              <p className="text-xs text-gray-400 italic leading-relaxed mb-1">
                 "{currentContent.quote}"
               </p>
-              <p className="text-cyan-400 font-medium">— Satya Adil Faishal</p>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {currentContent.stats.map((stat, index) => (
-                <div
-                  key={index}
-                  className="text-center group"
-                >
-                  <div className="text-2xl md:text-3xl font-bold text-cyan-400 mb-1 group-hover:scale-110 transition-transform">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs text-gray-500 tracking-wide">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+              <p className="text-xs text-cyan-400/70">— Satya Adil Faishal</p>
             </div>
           </div>
         )}
