@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Josefin_Sans } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
@@ -10,10 +9,17 @@ export const metadata: Metadata = {
   title: "StyDcode",
   icons: {
     icon: [
-      { url: "/StyDcode.ico", sizes: "512x512", },
+      { url: "/StyDcode.ico", sizes: "512x512" },
     ],
   },
 }
+
+// ✅ Gunakan Josefin Sans untuk semua halaman
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400"],
+  variable: "--font-josefin",
+})
 
 export default function RootLayout({
   children,
@@ -21,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={`dark ${josefin.variable}`}>
       <head>
         {/* UIcons CDN biar icon LinkedIn, Github, IG muncul */}
         <link
@@ -29,9 +35,7 @@ export default function RootLayout({
           href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css"
         />
       </head>
-      <body
-        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
-      >
+      <body className="font-[var(--font-josefin)] antialiased">
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>

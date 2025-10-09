@@ -7,7 +7,7 @@ import { Canvas, useFrame } from "@react-three/fiber"
 import { useGLTF, useAnimations } from "@react-three/drei"
 
 function AstronautModel(props: any) {
-  const { scene, animations } = useGLTF("/astronaut_3d.glb")
+  const { scene, animations } = useGLTF("/astronaut_optimized.glb")
   const { actions } = useAnimations(animations, scene)
   const astronautRef = useRef<any>()
   const spotLightRef = useRef<any>()
@@ -175,10 +175,10 @@ const HeroSection: React.FC = () => {
 
       {/* Scroll indicator */}
       <div className="absolute bottom-6 flex flex-col items-center gap-2 z-20">
-        <div className="w-4 h-8 border-2 border-white rounded-full flex items-start justify-center p-1">
+        <div className="w-5 h-8 border-2 border-white rounded-full flex items-start justify-center p-1">
           <div className="w-1 h-2 bg-white rounded-full animate-bounce"></div>
         </div>
-        <p className="text-xs tracking-widest">Scroll Down</p>
+        <p className="text-xs tracking-widest">Explore</p>
       </div>
     </section>
   )

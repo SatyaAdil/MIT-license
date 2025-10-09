@@ -1,14 +1,22 @@
-// invitation-section.tsx
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import React, { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
+
+// ✅ Tambahkan deklarasi supaya TypeScript nggak error
+declare module "three/examples/jsm/loaders/GLTFLoader" {
+  interface GLTFLoader {
+    setDRACOLoader?: (dracoLoader: any) => void;
+    setMeshoptDecoder?: (decoder: any) => void;
+  }
+}
 
 export default function InvitationSection() {
   const mountRef = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
-  // Lazy load: hanya load saat section terlihat
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -20,19 +28,15 @@ export default function InvitationSection() {
       { threshold: 0.1 }
     );
 
-    if (mountRef.current) {
-      observer.observe(mountRef.current);
-    }
-
+    if (mountRef.current) observer.observe(mountRef.current);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     if (!mountRef.current || !shouldLoad) return;
 
-    // Scene & Camera
     const scene = new THREE.Scene();
-    
+
     const camera = new THREE.PerspectiveCamera(
       60,
       window.innerWidth / window.innerHeight,
@@ -41,20 +45,17 @@ export default function InvitationSection() {
     );
     camera.position.set(0, 2, 8);
 
-    // Renderer dengan alpha dan clearColor transparan
-    const renderer = new THREE.WebGLRenderer({ 
+    const renderer = new THREE.WebGLRenderer({
       antialias: window.devicePixelRatio < 2,
       alpha: true,
-      powerPreference: "high-performance"
+      powerPreference: "high-performance",
     });
-    
+
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.shadowMap.enabled = false;
     mountRef.current.appendChild(renderer.domElement);
 
-    // Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
@@ -62,9 +63,13 @@ export default function InvitationSection() {
     dirLight.position.set(5, 10, 5);
     scene.add(dirLight);
 
-    // Load GLB
     const loader = new GLTFLoader();
-    const glbPath = '/invit.glb';
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("/draco/");
+    loader.setDRACOLoader?.(dracoLoader);
+    loader.setMeshoptDecoder?.(MeshoptDecoder);
+
+    const glbPath = "/invit_optimized.glb";
     let model: THREE.Object3D | undefined;
 
     loader.load(
@@ -73,119 +78,92 @@ export default function InvitationSection() {
         model = gltf.scene;
         model.position.set(0, 0, 0);
         model.scale.set(2, 2, 2);
-        
-        // Debug: Print semua nama mesh
-        console.log('=== GLB Meshes ===');
-        model.traverse((child) => {
-          if ((child as THREE.Mesh).isMesh) {
-            console.log(`Mesh: "${child.name}" | Type: ${child.type}`);
-          }
-        });
-        
-        // Hapus background/sky/unwanted objects dari GLB
+
         model.traverse((child) => {
           if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
             const name = child.name.toLowerCase();
-            
-            // Filter berbagai nama yang biasa dipakai untuk background/blocking objects
+
             if (
-              name.includes('sky') || 
-              name.includes('background') || 
-              name.includes('plane') || 
-              name.includes('floor') ||
-              name.includes('ambiente') ||
-              name.includes('sphere') ||
-              name.includes('cube') ||
-              name.includes('box') ||
-              name.includes('quad')
+              name.includes("sky") ||
+              name.includes("background") ||
+              name.includes("plane") ||
+              name.includes("floor") ||
+              name.includes("sphere") ||
+              name.includes("cube") ||
+              name.includes("box")
             ) {
-              console.log(`🗑️ Hiding: ${child.name}`);
               child.visible = false;
             }
-            
-            // Hapus mesh yang terlalu besar (kemungkinan skybox/background)
-            if (mesh.geometry) {
-              mesh.geometry.computeBoundingSphere();
-              const radius = mesh.geometry.boundingSphere?.radius || 0;
-              
-              if (radius > 50) {
-                console.log(`🗑️ Hiding large mesh: ${child.name} (radius: ${radius.toFixed(2)})`);
-                child.visible = false;
-              }
-            }
-            
-            // Nonaktifkan shadow untuk performa
-            child.castShadow = false;
-            child.receiveShadow = false;
+
+            mesh.castShadow = false;
+            mesh.receiveShadow = false;
           }
         });
-        
+
         scene.add(model);
       },
       undefined,
-      (error) => {
-        console.error('Error loading GLB:', error);
-      }
+      (error) => console.error("Error loading GLB:", error)
     );
 
-    // Animation loop dengan throttling
-    let lastTime = 0;
-    const targetFPS = 30;
-    const frameInterval = 1000 / targetFPS;
-    
-    const animate = (currentTime: number) => {
+    const animate = () => {
       requestAnimationFrame(animate);
-      
-      const deltaTime = currentTime - lastTime;
-      if (deltaTime < frameInterval) return;
-      
-      lastTime = currentTime - (deltaTime % frameInterval);
-      
-      if (model) {
-        model.rotation.y += 0.001;
-      }
+      if (model) model.rotation.y += 0.001;
       renderer.render(scene, camera);
     };
-    animate(0);
+    animate();
 
-    // Resize handling
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-    // Cleanup
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       if (mountRef.current && renderer.domElement.parentNode) {
         mountRef.current.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      
-      scene.traverse((object) => {
-        if ((object as THREE.Mesh).isMesh) {
-          const mesh = object as THREE.Mesh;
-          mesh.geometry?.dispose();
-          if (Array.isArray(mesh.material)) {
-            mesh.material.forEach(material => material.dispose());
-          } else {
-            mesh.material?.dispose();
-          }
-        }
-      });
     };
   }, [shouldLoad]);
 
   return (
     <div className="relative w-full h-screen">
-      <div 
-        ref={mountRef} 
-        className="absolute inset-0"
-        style={{ background: 'transparent' }}
-      />
+      <div ref={mountRef} className="absolute inset-0" style={{ background: "transparent" }} />
+
+      {/* Footer */}
+      <div
+        className="absolute bottom-10 left-0 right-0 text-center z-10 select-none animate-fadeIn"
+        style={{
+          fontFamily: "'Josefin Sans', sans-serif",
+          textShadow: "0 0 10px rgba(255,255,255,0.25)",
+        }}
+      >
+        <h1 className="text-1xl font-light tracking-widest mb-2 italic">Sty'Dcode</h1>
+        <p className="text-sm opacity-80">Software Developer</p>
+        <p className="text-xs opacity-60 mt-1">
+          Copyright © 2023 - 2025 by Satya Adil
+        </p>
+      </div>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 2s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }
