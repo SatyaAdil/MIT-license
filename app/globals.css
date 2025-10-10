@@ -193,3 +193,63 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
+/* === Hide scrollbar but keep scrolling (Jesky style) === */
+
+/* Untuk Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Untuk Firefox, IE, Edge */
+html, body {
+  -ms-overflow-style: none; /* IE dan Edge lama */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Opsional: bikin scroll lebih halus */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Kalau mau tambahkan class utilitas sendiri */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* === Hide scrollbar but keep scrolling (Jesky style) === */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+}
+
+/* Smooth scroll inertia feel */
+body {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
+}
+
+/* Tambahan kelas utilitas */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Optional: bikin transisi antar-section lembut */
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}

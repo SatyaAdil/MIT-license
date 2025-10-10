@@ -5,7 +5,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 
-// ✅ Tambahkan deklarasi supaya TypeScript nggak error
 declare module "three/examples/jsm/loaders/GLTFLoader" {
   interface GLTFLoader {
     setDRACOLoader?: (dracoLoader: any) => void;
@@ -16,6 +15,9 @@ declare module "three/examples/jsm/loaders/GLTFLoader" {
 export default function InvitationSection() {
   const mountRef = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
+
+  // 💬 STATE UNTUK TYPING EFFECT
+  const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -32,6 +34,7 @@ export default function InvitationSection() {
     return () => observer.disconnect();
   }, []);
 
+  // ✅ Efek Three.js (tidak diubah)
   useEffect(() => {
     if (!mountRef.current || !shouldLoad) return;
 
@@ -130,9 +133,67 @@ export default function InvitationSection() {
     };
   }, [shouldLoad]);
 
+  // 💫 Efek Typing Loop
+  useEffect(() => {
+    const dialogues = [
+      "Hey there!",
+      "Thank you so much for stopping by",
+      "Wanna explore a bit more?",
+      `Come visit my <a href="https://roomstydcode.netlify.app/" target="_blank">Room</a>`,
+    ];
+
+
+    let dialogIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let currentText = "";
+    const typingSpeed = 45;
+    const pauseBetween = 1500;
+
+    const type = () => {
+      const fullText = dialogues[dialogIndex];
+
+      if (!isDeleting) {
+        currentText = fullText.substring(0, charIndex + 1);
+        charIndex++;
+        setTypedText(currentText + '<span class="cursor"></span>');
+
+        if (charIndex === fullText.length) {
+          isDeleting = true;
+          setTimeout(type, pauseBetween);
+          return;
+        }
+      } else {
+        currentText = fullText.substring(0, charIndex - 1);
+        charIndex--;
+        setTypedText(currentText + '<span class="cursor"></span>');
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          dialogIndex = (dialogIndex + 1) % dialogues.length;
+        }
+      }
+
+      const delay = isDeleting ? 30 : typingSpeed;
+      setTimeout(type, delay);
+    };
+
+    type();
+  }, []);
+
   return (
     <div className="relative w-full h-screen">
       <div ref={mountRef} className="absolute inset-0" style={{ background: "transparent" }} />
+
+      {/* 💬 Speech Bubble */}
+     <div className="speech-bubble centered">
+        <p dangerouslySetInnerHTML={{ __html: typedText }} />
+        <button className="visit-btn">
+          <a href="https://roomstydcode.netlify.app/" target="_blank" rel="noopener noreferrer">
+            Lest Go!
+          </a>
+        </button>
+      </div>
 
       {/* Footer */}
       <div
@@ -162,6 +223,84 @@ export default function InvitationSection() {
         }
         .animate-fadeIn {
           animation: fadeIn 2s ease-in-out;
+        }
+        .speech-bubble {
+          position: absolute;
+          bottom: 350px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          padding: 12px 18px;
+          max-width: 260px;
+          font-size: 14px;
+          text-align: center;
+          backdrop-filter: blur(6px);
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+          animation: floatUp 3s ease-in-out infinite;
+        }
+
+        .speech-bubble::after {
+          content: "";
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-width: 10px 10px 0;
+          border-style: solid;
+          border-color: rgba(255, 255, 255, 0.1) transparent transparent transparent;
+        }
+
+        .speech-bubble a {
+          color: #4fc3f7;
+          text-decoration: none;
+          font-weight: 600;
+        }
+        .visit-btn {
+          margin-top: 10px;
+          background: rgba(79, 195, 247, 0.2);
+          border: 1px solid rgba(79, 195, 247, 0.4);
+          color: #4fc3f7;
+          font-size: 13px;
+          padding: 6px 14px;
+          border-radius: 8px;
+          cursor: pointer;
+          backdrop-filter: blur(4px);
+          transition: all 0.3s ease;
+        }
+
+        .visit-btn:hover {
+          background: rgba(79, 195, 247, 0.4);
+          transform: translateY(-2px);
+        }
+
+        .visit-btn a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        @keyframes floatUp {
+          0%, 100% {
+            transform: translate(-50%, 0);
+          }
+          50% {
+            transform: translate(-50%, -6px);
+          }
+        }
+
+        .cursor {
+          display: inline-block;
+          width: 8px;
+          background-color: #4fc3f7;
+          margin-left: 2px;
+          animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
         }
       `}</style>
     </div>

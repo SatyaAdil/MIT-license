@@ -169,10 +169,6 @@ const HeroSection: React.FC = () => {
       {/* Background Stars */}
       <BackgroundStars />
 
-      <div className="absolute top-6 right-6 z-20 text-sm text-gray-400">
-        <p>Use WASD or Arrow Keys to move</p>
-      </div>
-
       {/* Scroll indicator */}
       <div className="absolute bottom-6 flex flex-col items-center gap-2 z-20">
         <div className="w-5 h-8 border-2 border-white rounded-full flex items-start justify-center p-1">

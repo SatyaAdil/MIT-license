@@ -20,17 +20,17 @@ export default function Navigation() {
         <Image
           src="/logo.png"
           alt="Logo"
-          width={190}   // sebelumnya 120 → diperbesar
+          width={150}   // sebelumnya 120 → diperbesar
           height={55}   // sebelumnya 40 → diperbesar
           className="object-contain drop-shadow-[0_0_6px_rgba(0,200,255,0.6)]"
         />
       </div>
 
       {/* Tengah Atas - Nav Bubble */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 pointer-events-auto">
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 pointer-events-auto">
         <div
-          className="flex items-center gap-8 px-12 py-4 rounded-2xl
-          bg-black/60 backdrop-blur-xl border border-white/10
+         className="flex items-center gap-10 px-12 py-5 rounded-2xl
+          bg-neutral-900/100 backdrop-blur-xl border border-white/10
           shadow-lg"
         >
           {navItems.map((item) => (
@@ -54,7 +54,7 @@ export default function Navigation() {
       </div>
 
       {/* Kanan Atas - Sosmed */}
-      <div className="absolute top-6 right-6 flex items-center gap-5 pointer-events-auto text-white text-lg">
+      <div className="absolute top-6 right-6 flex items-center gap-5 pointer-events-auto text-white text-[1.35rem]">
         <a
           href="https://instagram.com"
           target="_blank"
