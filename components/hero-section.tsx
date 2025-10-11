@@ -1,6 +1,7 @@
 "use client"
 import type React from "react"
 import { useEffect, useRef } from "react"
+import { motion } from "framer-motion"
 import VideoText from "./VideoText"
 import BackgroundStars from "@/components/BackgroundStars"
 import { Canvas, useFrame } from "@react-three/fiber"
@@ -66,7 +67,6 @@ function AstronautModel(props: any) {
       astronautRef.current.position.x = Math.max(-8, Math.min(8, astronautRef.current.position.x))
       astronautRef.current.position.z = Math.max(-5, Math.min(5, astronautRef.current.position.z))
 
-      // Update spotlight to follow astronaut
       if (spotLightRef.current) {
         spotLightRef.current.position.x = astronautRef.current.position.x
         spotLightRef.current.position.z = astronautRef.current.position.z
@@ -78,7 +78,6 @@ function AstronautModel(props: any) {
         spotLightRef.current.target.updateMatrixWorld()
       }
 
-      // Update ground plane to follow astronaut
       if (groundRef.current) {
         groundRef.current.position.x = astronautRef.current.position.x
         groundRef.current.position.z = astronautRef.current.position.z
@@ -88,7 +87,6 @@ function AstronautModel(props: any) {
 
   return (
     <>
-      {/* Main spotlight following astronaut - very soft */}
       <spotLight
         ref={spotLightRef}
         position={[0, 0.1, 0]}
@@ -103,7 +101,6 @@ function AstronautModel(props: any) {
         shadow-bias={-0.0001}
       />
 
-      {/* Ground circle - very thin and subtle like jesky */}
       <mesh 
         ref={groundRef}
         rotation={[-Math.PI / 2, 0, 0]} 
@@ -129,47 +126,56 @@ function AstronautModel(props: any) {
 const HeroSection: React.FC = () => {
   return (
     <section className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden text-white">
-      {/* Nama Jepang */}
-      <div className="absolute top-[15%] left-[20%] z-20">
-        <p className="text-3xl text-gray-400 tracking-[0.10em]">サティア アディル</p>
-      </div>
+     <div className="absolute top-[15%] left-[20%] z-20">
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: [1, 0.4, 1], 
+            color: ["#A0D8EF", "#ffffff", "#A0D8EF"], 
+            textShadow: [
+              "0 0 10px rgba(160,216,239,0.8), 0 0 20px rgba(160,216,239,0.6)",
+              "0 0 15px rgba(255,255,255,0.9), 0 0 25px rgba(255,255,255,0.7)",
+              "0 0 10px rgba(160,216,239,0.8), 0 0 20px rgba(160,216,239,0.6)",
+            ],
+          }}
+          transition={{
+            duration: 0.8, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+          }}
+          className="text-3xl font-light tracking-tight"
 
-      {/* VideoText */}
+        >
+          ようこそ、私のポートフォリオへ
+        </motion.p>
+      </div>
       <div className="absolute top-[10%] left-[20%] z-20">
         <VideoText />
       </div>
 
-      {/* Canvas Astronot 3D */}
       <div className="absolute inset-0 z-10">
         <Canvas shadows camera={{ position: [0, 2, 8], fov: 50 }}>
-          {/* Minimal ambient */}
           <ambientLight intensity={0.08} />
           
-          {/* Gentle front light */}
           <directionalLight
             position={[0, 2, 3]}
             intensity={0.6}
             color="#ffffff"
           />
 
-          {/* Astronaut with dynamic spotlight */}
           <AstronautModel scale={0.3} position={[0, -2, 0]} />
 
-          {/* Minimal rim lights */}
           <pointLight position={[2, 0.5, 1]} intensity={0.4} color="#aaaaaa" distance={6} />
           <pointLight position={[-2, 0.5, 1]} intensity={0.4} color="#aaaaaa" distance={6} />
         </Canvas>
       </div>
 
-      {/* Subtle center glow */}
       <div className="absolute inset-0 z-[5] pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] bg-gradient-radial from-white/8 via-white/3 to-transparent rounded-full blur-[60px]"></div>
       </div>
 
-      {/* Background Stars */}
       <BackgroundStars />
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-6 flex flex-col items-center gap-2 z-20">
         <div className="w-5 h-8 border-2 border-white rounded-full flex items-start justify-center p-1">
           <div className="w-1 h-2 bg-white rounded-full animate-bounce"></div>

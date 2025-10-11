@@ -4,16 +4,23 @@ import { motion } from "framer-motion"
 
 export default function ProfileSection() {
   return (
-   <section className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
-      {/* HEADER / SUBTITLE */}
+   <section id="profile" className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
       <div className="relative px-30 mb-20 pt-12">
         <motion.h4
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-neutral-400 uppercase tracking-[0.4em] text-sm mb-4"
+          animate={{
+            color: ["#0096FF", "#A0D8EF", "#87CEFA", "#0096FF"], 
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "mirror",
+            ease: "easeOut"
+          }}
+          className="uppercase tracking-[0.4em] text-xl mb-2 font-bold"
         >
-          Introduction
+          はじめに
         </motion.h4>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -25,9 +32,7 @@ export default function ProfileSection() {
         </motion.h1>
       </div>
 
-      {/* KONTEN */}
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-16 max-w-6xl mx-auto text-center md:text-left">
-          {/* FOTO KIRI */}
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -40,17 +45,15 @@ export default function ProfileSection() {
               className="w-full h-full object-cover"
             />
           </motion.div>
-
-          {/* TEKS KANAN */}
           <motion.div
             initial={{ opacity: 0, x: 80 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
             className="max-w-[600px]"
           >
-            <h3 className="text-lg font-light mb-2">Hi there! 👋</h3>
+            <h3 className="text-lg font-light mb-2">Hi there!</h3>
             <p className="text-neutral-300 mb-4">
-              My name is <span className="font-semibold text-white">Satya Adil</span>, and I'm a{" "}
+              My name is <span className="font-semibold text-white">Satya Adil Faishal</span>, and I'm a{" "}
               <span className="text-pink-400 font-semibold">Software Engineer</span>.
             </p>
 
@@ -60,10 +63,6 @@ export default function ProfileSection() {
               applications using <span className="text-pink-400">React</span> and{" "}
               <span className="text-pink-400">Next.js</span>.
             </p>
-
-            <button className="px-6 py-3 border-2 border-white/30 text-sm uppercase tracking-[0.2em] hover:bg-white/10 transition-all">
-              Contact Me
-            </button>
           </motion.div>
         </div>
     </section>

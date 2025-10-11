@@ -1,4 +1,3 @@
-// globals.d.ts
 declare module 'three/examples/jsm/loaders/GLTFLoader' {
   import { Group } from 'three';
   export class GLTFLoader {

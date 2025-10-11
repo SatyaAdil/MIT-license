@@ -90,10 +90,8 @@ const SpaceBackground: React.FC = () => {
 
   return (
     <div className="absolute inset-0 -z-10 flex flex-col">
-      {/* 65% atas hitam pekat */}
       <div className="h-[55.2%] w-full bg-black" />
 
-      {/* Gradasi tipis transisi */}
       <div
         className="h-[75px] w-full"
         style={{
@@ -101,16 +99,13 @@ const SpaceBackground: React.FC = () => {
         }}
       />
 
-      {/* 35% bawah abu-abu gelap mendekati hitam */}
       <div className="flex-1 w-full" style={{ backgroundColor: "#1a1a1a" }} />
 
-      {/* Canvas untuk partikel bintang */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
       />
 
-      {/* Vignette effect */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{

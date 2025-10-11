@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
-// Komponen ringan
 import HeroSection from "@/components/hero-section";
 import ProjectsSection from "@/components/projects-section";
 import GallerySection from "@/components/gallery-section";
@@ -14,9 +13,10 @@ import Navigation from "@/components/navigation";
 import ProfileSection from "@/components/ProfileSection";
 import LearningJourneyConcepts from "@/components/Learning"; 
 import Contact from "@/components/Contact"; 
-// import { Contact as ContactIcon } from "lucide-react"; // kalau mau pakai ikon
+import SrollToTop from "@/components/ScrollToTop";
+import ScrollProgress from "@/components/ScrollProgress";
 
-// Komponen berat
+
 const MusicPlayer = dynamic(() => import("@/components/music-player"), { ssr: false });
 
 export default function Home() {
@@ -30,12 +30,10 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-x-hidden no-scrollbar">
-
-      {/* Navigasi & Music Player */}
+      <ScrollProgress />
       <Navigation />
       <MusicPlayer />
-
-      {/* Hero Section */}
+      <SrollToTop />  
       {!isScrolled ? (
         <div className="fixed inset-0 z-10">
           <HeroSection />
@@ -48,8 +46,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      {/* Konten utama */}
       <div className="relative z-20">
         <div className="h-screen" />
         <div className="relative">

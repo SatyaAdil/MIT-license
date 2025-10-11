@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   },
 }
 
-// ✅ Gunakan Josefin Sans untuk semua halaman
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   weight: ["300", "400"],
@@ -29,7 +28,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${josefin.variable}`}>
       <head>
-        {/* UIcons CDN biar icon LinkedIn, Github, IG muncul */}
         <link
           rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css"

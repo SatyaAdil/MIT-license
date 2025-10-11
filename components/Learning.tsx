@@ -63,12 +63,9 @@ export default function LearningJourney() {
           </p>
         </div>
 
-        {/* Timeline Container */}
         <div ref={containerRef} className="relative">
-          {/* Static Background Line (Center) */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] bg-neutral-800"></div>
           
-          {/* Animated Line (follows scroll) */}
           <motion.div
             className="absolute left-1/2 -translate-x-1/2 top-0 w-[2px] bg-gradient-to-b from-pink-500 to-purple-500 origin-top"
             style={{
@@ -76,7 +73,6 @@ export default function LearningJourney() {
             }}
           />
 
-          {/* Animated Moving Dot */}
           <motion.div
             className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-pink-500 shadow-lg shadow-pink-500/50 z-20"
             style={{
@@ -84,7 +80,7 @@ export default function LearningJourney() {
             }}
           />
 
-          {/* Journey Items - Zigzag */}
+
           {journey.map((item, index) => {
             const isLeft = index % 2 === 0
 
@@ -99,19 +95,17 @@ export default function LearningJourney() {
                   isLeft ? "justify-start" : "justify-end"
                 }`}
               >
-                {/* Content */}
+
                 <div className={`w-[45%] ${isLeft ? "pr-12 text-right" : "pl-12 text-left"}`}>
-                  {/* Year */}
+
                   <div className="mb-2">
                     <span className="text-3xl font-black text-neutral-600">{item.year}</span>
                   </div>
 
-                  {/* Phase */}
                   <h3 className="text-xl font-bold tracking-tight text-white mb-3">
                     {item.phase}
                   </h3>
 
-                  {/* Skills */}
                   <div className={`flex flex-wrap gap-2 ${isLeft ? "justify-end" : "justify-start"}`}>
                     {item.skills.map((skill, i) => (
                       <span
@@ -124,10 +118,8 @@ export default function LearningJourney() {
                   </div>
                 </div>
 
-                {/* Static Dot at Center */}
                 <div className="absolute left-1/2 -translate-x-1/2 top-2 w-3 h-3 rounded-full border-2 border-neutral-600 bg-black z-10"></div>
 
-                {/* Connector Line */}
                 <div
                   className={`absolute top-3 w-10 h-[1px] bg-white/20 ${
                     isLeft ? "right-1/2 mr-[6px]" : "left-1/2 ml-[6px]"

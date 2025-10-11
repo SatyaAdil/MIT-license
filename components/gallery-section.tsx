@@ -9,17 +9,14 @@ export default function GallerySection() {
 
   return (
     <section className="relative w-full min-h-screen bg-transparent text-white overflow-hidden">
-      {/* Efek gambar parallax */}
       <ParallaxImages />
 
-      {/* Gambar logo / teks overlay */}
       <motion.div
         style={{ y: yText }}
         className="absolute inset-0 flex flex-col justify-center items-center text-center px-6"
       >
-        {/* ✅ Ganti h2 jadi gambar */}
         <motion.img
-          src="/coder.png"   // ⬅️ taruh file ini di /public/
+          src="/coder.png" 
           alt="StyDcode"
           initial={{ opacity: 1, scale: 1 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -27,14 +24,12 @@ export default function GallerySection() {
           className="w-[300px] md:w-[500px] mb-6 drop-shadow-[0_5px_15px_rgba(255,255,255,0.3)]"
         />
 
-        {/* (opsional) teks kecil di bawah logo */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-lg md:text-2xl text-gray-300 max-w-2xl"
         >
-          {/* tambahkan deskripsi di sini kalau mau */}
         </motion.p>
       </motion.div>
     </section>

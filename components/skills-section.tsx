@@ -116,7 +116,7 @@ export default function SkillsSection() {
           <p className="text-neutral-500 text-xs tracking-[0.15em] uppercase">
             List of featured portfolio
           </p>
-          <p className="text-gray-500 text-xs">
+          <p className="text-gray-500 text-xs mb-4">
             {totalSkills} skills across {Object.keys(skillSections).length} categories
           </p>
         </div>

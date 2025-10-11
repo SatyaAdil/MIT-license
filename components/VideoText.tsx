@@ -9,7 +9,7 @@ const VideoText: React.FC = () => {
         style={{
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
-          backgroundImage: "url('/video.gif')",
+          backgroundImage: "url('/satya.gif')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

@@ -185,7 +185,6 @@ export default function InvitationSection() {
     <div className="relative w-full h-screen">
       <div ref={mountRef} className="absolute inset-0" style={{ background: "transparent" }} />
 
-      {/* 💬 Speech Bubble */}
      <div className="speech-bubble centered">
         <p dangerouslySetInnerHTML={{ __html: typedText }} />
         <button className="visit-btn">
@@ -195,7 +194,6 @@ export default function InvitationSection() {
         </button>
       </div>
 
-      {/* Footer */}
       <div
         className="absolute bottom-10 left-0 right-0 text-center z-10 select-none animate-fadeIn"
         style={{

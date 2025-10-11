@@ -66,16 +66,28 @@ const projects = [
           font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
       `}</style>
-    <section className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
+    <section id="projects" className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
       <div className="relative px-30 mb-20 pt-12">
-        <p className="text-neutral-400 text-sm tracking-[0.3em] uppercase mb-2">
-          FEATURED WORKS
-        </p>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          animate={{
+            color: ["#0096FF", "#A0D8EF", "#87CEFA", "#0096FF"], // biru → muda → langit → balik
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "mirror",
+          }}
+          className="text-xl tracking-[0.5em] uppercase mb-2 font-bold"
+        >
+          注目作品
+        </motion.p>
         <h1 className="text-[8rem] font-black tracking-tight leading-none text-white mb-16">
           PROJECTS
         </h1>
         <div className="text-center mt-12">
-          <p className="text-pink-400 text-sm font-bold tracking-[0.4em] mb-2 uppercase">
+          <p className="text-pink-400 text-[20px] tracking-[0.15em] mb-1 uppercase">
             OVERVIEW
           </p>
           <p className="text-neutral-500 text-xs tracking-[0.15em] uppercase">

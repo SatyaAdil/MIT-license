@@ -13,7 +13,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 
-const StayInTouchJesky = () => {
+const StayInTouch = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const contacts = [
@@ -85,39 +85,51 @@ const StayInTouchJesky = () => {
   ];
 
   return (
-    <section className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
+    <section id="contact" className="relative w-full min-h-screen bg-transparent text-white py-20 overflow-hidden">
         <div className="relative px-30 mb-20 pt-12">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            animate={{
+              color: ["#0096FF", "#A0D8EF", "#87CEFA", "#0096FF"], // biru → muda → langit → balik
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              repeatType: "mirror",
+            }}
+            className="text-xl tracking-[0.5em] uppercase mb-2 font-bold"
+          >
+            連絡
+          </motion.p>
           <h1 className="text-[8rem] font-black tracking-tight leading-none text-white mb-16">
             CONTACT
           </h1>
         </div>
 
-        {/* Background blur effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-1/4 w-96 h-96 bg-slate-800 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
           <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-slate-800 rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-20">
             <h1 className="text-lg md:text-4xl font-light text-white mb-8 tracking-wide">
               Stay In Touch
             </h1>
 
-            {/* 🔹 Animasi kotak loncat bergantian */}
             <div className="flex justify-center gap-3 mb-1">
               {[
-                { delay: 0.2 }, // kiri
-                { delay: 0 },   // tengah
-                { delay: 0.4 }, // kanan
+                { delay: 0.2 }, 
+                { delay: 0 },  
+                { delay: 0.4 }, 
               ].map((dot, index) => (
                 <motion.div
                   key={index}
-                  className="w-4 h-4 bg-white rounded-none" // 👈 no radius, full kotak
+                  className="w-4 h-4 bg-white rounded-none"
                   animate={{
-                    y: [0, -12, 0], // loncat ke atas lalu turun
-                    backgroundColor: ["#ffffff", "#60a5fa", "#ffffff"], // putih → biru → putih
+                    y: [0, -12, 0],
+                    backgroundColor: ["#ffffff", "#60a5fa", "#ffffff"], 
                   }}
                   transition={{
                     duration: 0.8,
@@ -135,7 +147,6 @@ const StayInTouchJesky = () => {
             </p>
           </div>
 
-          {/* Contact Grid */}
           <div className="space-y-12">
             {[0, 1].map((row) => (
               <div
@@ -204,4 +215,4 @@ const StayInTouchJesky = () => {
   );
 };
 
-export default StayInTouchJesky;
+export default StayInTouch;
