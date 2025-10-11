@@ -91,7 +91,7 @@ export default function Navigation() {
             return (
               <a
                 key={item.id}
-                href={`#${item.id}`} // LINK KE SECTION
+                href={`#${item.id}`} 
                 onClick={() => setActive(item.id)}
                 className={`relative text-sm font-medium transition-all duration-300 hover:scale-105 animate-pulse ${
                   isActive ? activeColor : baseColor

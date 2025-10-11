@@ -83,10 +83,10 @@ const projects = [
         >
           注目作品
         </motion.p>
-        <h1 className="text-[8rem] font-black tracking-tight leading-none text-white mb-16">
+        <h1 className="text-[8rem] font-black tracking-tight leading-none text-white mb-8">
           PROJECTS
         </h1>
-        <div className="text-center mt-12">
+        <div className="text-center mt-6">
           <p className="text-pink-400 text-[20px] tracking-[0.15em] mb-1 uppercase">
             OVERVIEW
           </p>
@@ -97,7 +97,7 @@ const projects = [
       </div>
 
       {/* Container dengan max-width dan padding untuk layout yang rapi */}
-      <div className="relative max-w-[1600px] mx-auto px-12 mt-16">
+      <div className="relative max-w-[1600px] mx-auto px-12 mt-8">
         {projects.map((project, index) => (
           <motion.div
             key={index}

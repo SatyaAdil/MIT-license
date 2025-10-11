@@ -15,7 +15,7 @@ const VideoText: React.FC = () => {
           backgroundRepeat: "no-repeat",
           fontFamily: "'Helvetica Neue', sans-serif",
           fontWeight: "1000",
-          letterSpacing: "-0.1em", // Bisa adjust antara -0.08em sampai -0.12em
+          letterSpacing: "-0.1em", 
           textTransform: "uppercase",
         }}
       >

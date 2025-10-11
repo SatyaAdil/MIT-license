@@ -10,15 +10,44 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(0.2);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const currentSong = {
-    title: "Tying Knots",
-    artist: "Aviino, Jared Janzen",
-    cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=400&fit=crop",
-    file: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-  };
+  const songs = [
+    {
+      title: "Orange (オレンジ, Orenji)",
+      artist: "7!!",
+      cover: "https://tse1.mm.bing.net/th/id/OIP.7xyGA7XRPrY3rOewA5MkgwAAAA?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+      file: "/music/7!! - Orange.mp3",
+    },
+    {
+      title: "WILDFLOWER",
+      artist: "Billie Eilish",
+      cover: "https://i.ytimg.com/vi/wKBYEhTgoHU/maxresdefault.jpg",
+      file: "/music/Billie Eilish WILDFLOWER.mp3",
+    },
+    {
+      title: "Rindunya Hatiku",
+      artist: "Fira Cantika",
+      cover: "https://tse2.mm.bing.net/th/id/OIP.CW4sBQbTmvDWFw0CnAjwBwHaJQ?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3",
+      file: "/music/dangdut rinduku.mp3",
+    },
+    {
+      title: "DJ Beda Agama",
+      artist: "DJ Manikci",
+      cover: "https://is3-ssl.mzstatic.com/image/thumb/Music116/v4/63/2a/fa/632afa23-95de-e2f8-e63f-7936f9beff4e/85bb0ef6-6319-4386-ac43-fa9a0ba4d324.jpg/1200x1200bf-60.jpg",
+      file: "/music/DjTikotok.mp3",
+    },
+    {
+      title: "Wali",
+      artist: "DJ Emang Dasar",
+      cover: "https://tse3.mm.bing.net/th/id/OIP.ZcpvwZnN0Co7F6W5rnk7MQHaFX?cb=12&w=610&h=442&rs=1&pid=ImgDetMain&o=7&rm=3",
+      file: "/music/DjWali.mp3",
+    },
+  ];
+
+  const currentSong = songs[currentSongIndex];
 
   useEffect(() => {
     if (audioRef.current) {
@@ -32,15 +61,20 @@ export default function MusicPlayer() {
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration);
+    const handleEnded = () => {
+      playNext();
+    };
 
     audio.addEventListener("timeupdate", updateTime);
     audio.addEventListener("loadedmetadata", updateDuration);
+    audio.addEventListener("ended", handleEnded);
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("loadedmetadata", updateDuration);
+      audio.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [currentSongIndex]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -50,6 +84,28 @@ export default function MusicPlayer() {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
+  };
+
+  const playNext = () => {
+    const nextIndex = (currentSongIndex + 1) % songs.length;
+    setCurrentSongIndex(nextIndex);
+    setCurrentTime(0);
+    if (isPlaying && audioRef.current) {
+      setTimeout(() => {
+        audioRef.current?.play();
+      }, 100);
+    }
+  };
+
+  const playPrevious = () => {
+    const prevIndex = currentSongIndex === 0 ? songs.length - 1 : currentSongIndex - 1;
+    setCurrentSongIndex(prevIndex);
+    setCurrentTime(0);
+    if (isPlaying && audioRef.current) {
+      setTimeout(() => {
+        audioRef.current?.play();
+      }, 100);
+    }
   };
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,24 +134,24 @@ export default function MusicPlayer() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          className="fixed top-20 right-6 z-50"
+          className="fixed top-23 right-5 z-50"
         >
           <motion.button
             onClick={() => setIsOpen(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-3 backdrop-blur-xl bg-white/100 border border-gray-200 px-4 py-2.5 rounded-xl shadow-xl hover:shadow-2xl transition-all"
+            className="flex items-center gap-3 backdrop-blur-xl bg-white/100 border border-gray-200 px-1 py-1 rounded-lg shadow-xl hover:shadow-2xl transition-all min-w-[200px]"
           >
             <img
               src={currentSong.cover}
               alt={currentSong.title}
-              className="w-9 h-9 rounded-lg object-cover"
+              className="w-11 h-11 rounded-md object-cover flex-shrink-0"
             />
-            <div className="text-left pr-1">
-              <p className="text-sm font-semibold text-gray-900 truncate max-w-[140px]">
+            <div className="text-left flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate leading-snug">
                 {currentSong.artist}
               </p>
-              <p className="text-xs text-gray-500 truncate max-w-[140px]">{currentSong.title}</p>
+              <p className="text-xs text-gray-500 truncate leading-snug">{currentSong.title}</p>
             </div>
           </motion.button>
           
@@ -113,8 +169,6 @@ export default function MusicPlayer() {
           </div>
         </motion.div>
       )}
-
-      {/* EXPANDED PLAYER */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -122,7 +176,7 @@ export default function MusicPlayer() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed top-32 right-6 w-[280px] bg-white/100 backdrop-blur-xl border border-gray-200 rounded-3xl shadow-2xl z-50 overflow-hidden"
+            className="fixed top-32 right-5 w-[200px] bg-white/100 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-2xl z-50 overflow-hidden"
           >
             {/* Close button */}
             <button
@@ -132,28 +186,31 @@ export default function MusicPlayer() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Album Cover */}
+            {/* Album Cover - FULL WIDTH NO PADDING */}
             <div className="relative">
               <img
                 src={currentSong.cover}
                 alt={currentSong.title}
-                className="w-full h-[280px] object-cover"
+                className="w-full h-[180px] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
 
-            {/* Song Info & Controls */}
-            <div className="p-5">
+            {/* Song Info & Controls - COMPACT PADDING */}
+            <div className="px-4 pb-4 pt-3">
               {/* Song Info */}
-              <div className="text-center mb-4">
-                <h3 className="text-base font-bold text-gray-900 mb-0.5">
+              <div className="text-center mb-3">
+                <h3 className="text-sm font-bold text-gray-900 mb-0.5">
                   {currentSong.artist}
                 </h3>
-                <p className="text-sm text-gray-500">{currentSong.title}</p>
+                <p className="text-xs text-gray-500">{currentSong.title}</p>
               </div>
 
               {/* Progress Bar */}
               <div className="mb-3">
+                <div className="flex justify-between text-[10px] text-gray-400 mb-1.5">
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{formatTime(duration)}</span>
+                </div>
                 <input
                   type="range"
                   min="0"
@@ -161,44 +218,46 @@ export default function MusicPlayer() {
                   step="0.1"
                   value={currentTime}
                   onChange={handleProgressChange}
-                  className="w-full h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:cursor-pointer"
+                  className="w-full h-1 bg-gray-200 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:cursor-pointer"
                 />
-                <div className="flex justify-between text-xs text-gray-400 mt-1.5">
-                  <span>{formatTime(currentTime)}</span>
-                  <span>{formatTime(duration)}</span>
-                </div>
               </div>
 
-              {/* Playback Controls */}
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <button className="p-2.5 hover:bg-gray-100 rounded-full transition-colors">
-                  <SkipBack className="text-gray-700 w-5 h-5" />
+              {/* Playback Controls - SMALLER BUTTONS */}
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <button 
+                  onClick={playPrevious}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <SkipBack className="text-gray-700 w-4 h-4" />
                 </button>
                 <button
-                  className="p-4 bg-gray-900 hover:bg-gray-800 rounded-full transition-colors"
+                  className="p-3 bg-gray-900 hover:bg-gray-800 rounded-full transition-colors"
                   onClick={togglePlay}
                 >
                   {isPlaying ? (
-                    <Pause className="text-white w-6 h-6" fill="white" />
+                    <Pause className="text-white w-5 h-5" fill="white" />
                   ) : (
-                    <Play className="text-white w-6 h-6 ml-0.5" fill="white" />
+                    <Play className="text-white w-5 h-5 ml-0.5" fill="white" />
                   )}
                 </button>
-                <button className="p-2.5 hover:bg-gray-100 rounded-full transition-colors">
-                  <SkipForward className="text-gray-700 w-5 h-5" />
+                <button 
+                  onClick={playNext}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <SkipForward className="text-gray-700 w-4 h-4" />
                 </button>
               </div>
 
-              {/* Volume Control */}
-              <div className="flex items-center gap-3 px-2">
+              {/* Volume Control - COMPACT */}
+              <div className="flex items-center">
                 <button 
                   onClick={() => setVolume(volume > 0 ? 0 : 0.2)}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   {volume > 0 ? (
-                    <Volume2 className="w-5 h-5" />
+                    <Volume2 className="w-4 h-3" />
                   ) : (
-                    <VolumeX className="w-5 h-5" />
+                    <VolumeX className="w-4 h-3" />
                   )}
                 </button>
                 <div className="flex-1 flex items-center gap-2">
@@ -209,9 +268,9 @@ export default function MusicPlayer() {
                     step="0.01"
                     value={volume}
                     onChange={(e) => setVolume(parseFloat(e.target.value))}
-                    className="flex-1 h-1.5 bg-gray-200 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:cursor-pointer"
+                    className="flex-1 h-1 bg-gray-200 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2.5 [&::-webkit-slider-thumb]:h-2.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:cursor-pointer"
                   />
-                  <span className="text-xs text-gray-500 font-medium w-8 text-right">
+                  <span className="text-[10px] text-gray-500 font-medium w-7 text-right">
                     {Math.round(volume * 100)}%
                   </span>
                 </div>
